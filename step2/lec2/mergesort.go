@@ -5,26 +5,31 @@ import "fmt"
 func main() {
 	arr := []int{3, 2, 4, 0, -1, -5, 3}
 
-	ms := &mergeSort{}
+	ms := &mergeSort{arr: arr}
 
-	arr = ms.Sort(arr, 0, len(arr)-1)
+	ms.Sort(0, len(arr)-1)
 
 	fmt.Println(arr)
 
+	fmt.Println(ms.arr)
 }
 
-type mergeSort struct{}
+type mergeSort struct {
+	arr []int
+}
 
-func (m *mergeSort) Sort(arr []int, start int, end int) []int {
+func (m *mergeSort) Sort(start int, end int) {
+	arr := m.arr
+
 	if start == end {
-		return arr
+		return
 	}
 
 	middle := start + (end-start)/2
 
-	m.Sort(arr, start, middle)
+	m.Sort(start, middle)
 
-	m.Sort(arr, middle+1, end)
+	m.Sort(middle+1, end)
 
 	temp := make([]int, 0, end-start+1)
 
@@ -54,5 +59,4 @@ func (m *mergeSort) Sort(arr []int, start int, end int) []int {
 		arr[start+i] = temp[i]
 	}
 
-	return arr
 }
